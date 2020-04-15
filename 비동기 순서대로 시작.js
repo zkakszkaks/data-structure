@@ -1,3 +1,5 @@
+// https://gist.github.com/anvk/5602ec398e4fdc521e2bf9940fd90f84
+// 비동기 순서대로 실행
 function asyncFunc(e) {
   return new Promise((resolve, reject) => {
     setTimeout(() => resolve(e), e * 1000);
