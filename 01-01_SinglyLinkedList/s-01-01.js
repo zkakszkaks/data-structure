@@ -129,6 +129,68 @@ SinglyLinkedList.prototype.find = function (value) {
 
   return false;
 };
+
+/**
+ * 단일 연결 리스트 뒤집기
+ * 단일 연결 리스트를 뒤집ㅈ기 위해서는 각 노드를 순회하면서 현재 노드의 next속성을 이전 노드로 설정하면 된다.
+ */
+SinglyLinkedList.prototype.reverseSingleLinkedList = function () {
+  let node = this.head;
+  let prev = null;
+
+  while (node) {
+    let temp = node.next;
+    node.next = prev;
+    prev = node;
+    if (!temp) {
+      break;
+    }
+    node = temp;
+  }
+  this.head = node;
+};
+
+/**
+ * 연결 리스트에서 중복된 항목 제거하기
+ * 노드를 순회하면서 방문한 노드를 배열에 저장하면 된다.
+ * 현재 항목이 이전에 방문한 항목과 같은 경우 현재 항목을 삭제 한다.
+ */
+// 정렬되지 않은 연결 리스트에서 중복 항목을 삭제한다.
+SinglyLinkedList.prototype.deleteDuplicateInUnsortedSll = function () {
+  let track = [];
+
+  let temp = this.head;
+  let prev = null;
+
+  while (temp) {
+    if (track.indexOf(temp.data) >= 0) {
+      prev.next = temp.next;
+      this.size--;
+    } else {
+      track.push(temp.data);
+      prev = temp;
+    }
+    temp = temp.next;
+  }
+};
+
+// 정렬되지 않은 연결 리스트에서 중복 항목을 삭제한다.
+SinglyLinkedList.prototype.deleteDuplicateInUnsortedSllBest = function () {
+  let track = {};
+
+  let temp = this.head;
+  let prev = null;
+  while (temp) {
+    if (track[temp.data]) {
+      prev.next = temp.next;
+      this.size--;
+    } else {
+      track[temp.data] = true;
+      prev = temp;
+    }
+    temp = temp.next;
+  }
+};
 let ll1 = new SinglyLinkedList();
 console.log(ll1.isEmpty());
 
@@ -164,11 +226,24 @@ console.log("헤드에서 팝한다.", ll1.deleteAtHead());
 console.log("헤드에서 팝 한후", ll1.toArray());
 
 console.log("----------");
-ll1.insert(10);
-ll1.insert(30);
-ll1.insert(50);
-console.log("배열로 데이터 출력", ll1.toArray());
-console.log("10이 있는가:", ll1.find(10));
-console.log("30이 있는가:", ll1.find(30));
-console.log("50이 있는가:", ll1.find(50));
-console.log("150이 있는가:", ll1.find(150));
+ll1.insert(1);
+ll1.insert(1);
+ll1.insert(5);
+ll1.insert(3);
+ll1.insert(3);
+ll1.insert(2);
+ll1.insert(1);
+ll1.insert(3);
+ll1.insert(5);
+// console.log("배열로 데이터 출력", ll1.toArray());
+// console.log("10이 있는가:", ll1.find(10));
+// console.log("30이 있는가:", ll1.find(30));
+// console.log("50이 있는가:", ll1.find(50));
+// console.log("150이 있는가:", ll1.find(150));
+
+console.log("to Array", ll1.toArray());
+console.log(ll1.toArray());
+ll1.reverseSingleLinkedList(ll1);
+console.log(ll1.toArray());
+ll1.deleteDuplicateInUnsortedSllBest();
+console.log(ll1.toArray());
