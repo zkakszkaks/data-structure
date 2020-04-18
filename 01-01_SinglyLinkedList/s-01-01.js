@@ -133,6 +133,14 @@ SinglyLinkedList.prototype.find = function (value) {
 /**
  * 단일 연결 리스트 뒤집기
  * 단일 연결 리스트를 뒤집ㅈ기 위해서는 각 노드를 순회하면서 현재 노드의 next속성을 이전 노드로 설정하면 된다.
+ * 1. node는 head의 값을 가진다.
+ * 2. prev는 널이다.
+ * 3. node값이 null이 아닐 때까지 반복 한다.
+ *   3.1 temp는 node.next 값이다
+ *   3.2 prev는 node 값이다.
+ *   3.3 temp가 null이면 종료한다.
+ *   3.4. node는 temp 값이다.
+ * 4. 헤드는 마지막 노드 값이다.
  */
 SinglyLinkedList.prototype.reverseSingleLinkedList = function () {
   let node = this.head;
@@ -156,6 +164,20 @@ SinglyLinkedList.prototype.reverseSingleLinkedList = function () {
  * 현재 항목이 이전에 방문한 항목과 같은 경우 현재 항목을 삭제 한다.
  */
 // 정렬되지 않은 연결 리스트에서 중복 항목을 삭제한다.
+/**
+ * 1. track은 빈배열이다.
+ * 2. currentNode = null;
+ * 3. 이전 값은 null 이다.
+ * 3 currentNode가 null이 아닐때 까지  반복한다.
+ * 3.1.1 트랙에 현재 노드의 데이터가 있다.
+ * 3.1.1.1 이전노드의 next는 현재노드의 넥스트 값이다.
+ * 3.2.1.1 크기를 1줄인다.
+ * 3.2 트랙에 현재 노드의 데이터 값이 없다.
+ * 3.2.1 트랙에 현재노드의 데이터 값을 넣는다.
+ * 3.2.2. 이전노드의 현재 노드이다.
+ * 3.2.현재노드는 현재노드 다음이다.
+ *
+ */
 SinglyLinkedList.prototype.deleteDuplicateInUnsortedSll = function () {
   let track = [];
 
@@ -175,6 +197,19 @@ SinglyLinkedList.prototype.deleteDuplicateInUnsortedSll = function () {
 };
 
 // 정렬되지 않은 연결 리스트에서 중복 항목을 삭제한다.
+/**
+ * 1. 트랙 빈 객체를 생성
+ * 2. this.head는 currentNode이다.
+ * 3. prev는 null 이다.
+ * 4. currentNode가 null 이 아닐 때까지 반복한다.
+ * 4.1 트랙에 데이터가 키로 있다.
+ * 4.1.1 이전노드의 다음 값은 현재 노드의 다음 값이다.
+ * 4.1.2 링크드리스트 크기를 줄인다.
+ * 4.2 트랙에 데이터가 키로 없다.
+ * 4.2.1.트랙 객체에 데이터를 이름으로 하는 속성은 추가하고 true를 넣어준다.
+ * 4.2.2. 이전값은 현재 노드이다.
+ * 4.3현재노드의 값은 다음 노드의 값이다.
+ */
 SinglyLinkedList.prototype.deleteDuplicateInUnsortedSllBest = function () {
   let track = {};
 
