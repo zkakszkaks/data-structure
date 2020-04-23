@@ -73,15 +73,16 @@ console.log(stack1);
  * [문제10] n번째 노드에 접근
  */
 function stackAccessNthTopNode(stack, n) {
-  var bufferArray = stack.getBuffer();
+  var bufferArray = stack.getBuffer(); // 스택을 복사함
   if (n <= 0) throw "error";
 
   var bufferStack = new Stack(bufferArray);
 
   while (--n !== 0) {
+    // n-1번 반복
     bufferStack.pop();
   }
-  return bufferStack.pop();
+  return bufferStack.pop(); // n번째 리턴
 }
 
 var stack2 = new Stack();
@@ -89,3 +90,21 @@ stack2.push(1);
 stack2.push(2);
 stack2.push(3);
 console.log("stackAccessNthTopNode", stackAccessNthTopNode(stack2, 2)); // 2
+
+/**
+ * [문제11] 검색
+ */
+function stackSeach(stack, element) {
+  var bufferArray = stack.getBuffer();
+
+  var bufferStack = new Stack(bufferArray); // 버퍼 스택으로 복사한다.
+
+  while (!bufferStack.isEmpty()) {
+    if (bufferStack.pop() == element) {
+      return true;
+    }
+  }
+  return false;
+}
+
+console.log("stackSeach", stackSeach(stack2, 3)); // true
