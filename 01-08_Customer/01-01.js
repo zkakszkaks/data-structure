@@ -1,28 +1,3 @@
-/**
- * 두 개의 큐를 사용해 스택을 만들 수 있다.
- * 스택은 마지막 항목을
- */
-
-/**
- * [01] 큐
- * 1. 큐는 스택과 달리 첫 번째로 추가된 항목만을 제거할 수 있는 자료 구조 다.
- * 2. 이러한 원리를 선입선출(FIFO, first in, first out)이라고 한다.
- * 3. 연산이 상수 시간이라는 점이 큐의 장점이다.
- * 4. 큐는 스택과 비슷하게 한 번에 한 개의 항목만 접근 할 수 있기 때문에  한계를 갖는다.
- * 5. 큐는 알고리즘이 첫 번째로 추가된 항목만을 접근해야 하는 선입선출 방식으로 자료를 처리해야 하는 경우에만 배열에 대해 사용한다.
- * 6. 자바스크립트에서 배열에는 큐 클래스를 정의한 shift와 push()라는 메소드가 있다.
- * 7. 자바스크립트에서 배열에 대해 shift() 메소드를 호출하면 배열의 첫 번째 항목을 제거해 반환한다는 점을 기억하자.
- * 8. 큐에 항목을 추가하는 것을 인큐(enqueuing)라 하고, 큐에 항목을 제거하는 것을 디큐(dequeuing)라 한다.
- * 9. shift()는 디큐에 대해 사용할 수 있고 push()는 인큐에 대해 사용할 수 있다.
- *
- */
-
-/**
- * Queue 생성자
- * array이를 반으면 이 배열을 가지고 큐를 생성한다.
- * array를 받지 않으면 빈 큐를 생성한다.
- * 큐 클래스 안에는 array배열이 있다.
- */
 function Queue(array) {
   this.array = [];
   if (array) this.array = array;
@@ -145,48 +120,56 @@ function queueSearch(queue, element) {
   return false;
 }
 
-function QueueStack() {
-  this.inbox = new Queue(); // 첫 번째 스택
+/**
+ * 고객 객체를 매개 변수로  받아서 선입선출 방식으로 음식을 주문을 처리하는 점원 클래스를 설계한다.
+ *
+ * 요구 사항은 다음과 같다.
+ * 1. 점원은 주문을 위해 고객의 이름과 주문 항목을 요구한다.
+ * 2. 첫 번째로 주문 받은 고객을 먼저 처리한다.
+ *
+ * 필요한 구현은 다음과 같다.
+ *
+ * addOrder(cusomer): deliverOrder()에 의해 고객 객체가 처리되도록 고객 객체를 삽입 한다.
+ * deliverOrder() : 다음으로 처리될 고객의 이름과 주문 항목을 출력한다.
+ *
+ * 이번 연습 문제의 경우 Cashier 클래스는 큐를 사용해 고객 클래스 객체를 삽입 하고 주문 처리가 끝나면 해당 고객 클래스 객체를 제거 해야 한다.
+ *
+ */
+
+function Customer(name, order) {
+  this.name = name;
+  this.order = order;
 }
 
-QueueStack.prototype.push = function (val) {
-  this.inbox.enqueue(val);
+function Cashier() {
+  this.customers = new Queue();
+}
+
+Cashier.prototype.addOrder = function (customer) {
+  this.customers.enqueue(customer);
 };
 
-/**
- * 1. inbox의 크기를 구한다. 전체크기 -1
- * 2. counter의 값은 0 이다.
- * 3. 버퍼 큐를 만든다.
- * 4. 전체크기-1만큼 기조 스택에서 데이터를 제외하고 나온 데이터를 버퍼 큐에 넣는다.
- * 5. 마지막 남은 데이터를 popped에 넣는다.
- * 6. this.inbox는 버퍼 큐다.
- * 7. 마지막 리턴한 값 popped를 리턴한다.
- */
-QueueStack.prototype.pop = function () {
-  var size = this.inbox.array.length - 1;
-  var counter = 0;
-  var bufferQueue = new Queue();
+Cashier.prototype.deliverOrder = function () {
+  var finishedCustomer = this.customers.dequeue();
 
-  while (++counter <= size) {
-    bufferQueue.enqueue(this.inbox.dequeue());
-  }
-
-  var popped = this.inbox.dequeue();
-  this.inbox = bufferQueue;
-  return popped;
+  console.log(
+    finishedCustomer.name + ", your " + finishedCustomer.order + " is ready!"
+  );
 };
 
-var stack = new QueueStack();
+var cashier = new Cashier();
+var customer1 = new Customer("Jim", "Fries");
+var customer2 = new Customer("Sammie", "Burger");
+var customer3 = new Customer("Peter", "Drink");
 
-stack.push(1);
-stack.push(2);
-stack.push(3);
-stack.push(4);
-stack.push(5);
+cashier.addOrder(customer1);
 
-console.log("pop", stack.pop()); // 5
-console.log("pop", stack.pop()); // 4
-console.log("pop", stack.pop()); // 3
-console.log("pop", stack.pop()); // 2
-console.log("pop", stack.pop()); // 1
-console.log("pop", stack.pop()); // undefined
+cashier.addOrder(customer2);
+
+cashier.addOrder(customer3);
+
+cashier.deliverOrder();
+
+cashier.deliverOrder();
+
+cashier.deliverOrder();
